@@ -71,7 +71,7 @@ PARENT_DIR=$(dirname -- "$TARGET")
 
 if [ "$SUBMODULE" -eq 1 ]; then
   if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
-    printf '--submodule requires running inside a git repo.\n' >&2
+    printf '%s\n' '--submodule requires running inside a git repo.' >&2
     exit 1
   fi
   printf 'Adding submodule at %s ...\n' "$TARGET"
