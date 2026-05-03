@@ -59,6 +59,10 @@ Two kinds of logs:
 - **Failure log** (e.g., `learnings.md`) — domain-level failures in the iteration / scoring loop. Tagged by [F-codes](./conduct/failure-modes.md).
 - **Precedent log** (e.g., `state/precedent-log.md`) — operational failures in shell, file, and tool commands. Self-observed, project-local. See [`./conduct/precedent.md`](./conduct/precedent.md).
 
+## Doubt pass
+
+A four-step adversarial self-check (state proposal → steelman opposite → name evidence against → surface or proceed) run before any agreement, alignment, or scope acceptance — including silent acceptance of one's own prior framing. The active counter to F01 sycophancy. See [`./conduct/doubt-engine.md`](./conduct/doubt-engine.md).
+
 ## Checkpoint
 
 A summary block emitted at ~50% context budget that becomes the new source of truth. Drops prior turns from active context. Format defined in [`./conduct/context.md`](./conduct/context.md).

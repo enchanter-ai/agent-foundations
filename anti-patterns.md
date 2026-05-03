@@ -111,6 +111,16 @@ This is **not the source of truth** — each pattern's home module is. But when 
 - **Logging at verdict time only** — log hypothesis before, outcome after. ([failure-modes.md](conduct/failure-modes.md))
 - **"Couldn't find a matching code"** — propose a new one (F15+) in a PR. ([failure-modes.md](conduct/failure-modes.md))
 
+## Doubt engine
+
+- **Agreeing then doubting** — doubt before yes, not after. ([doubt-engine.md](conduct/doubt-engine.md))
+- **Doubt as preamble** — *"I want to push back here…"* with no actual pushback. ([doubt-engine.md](conduct/doubt-engine.md))
+- **Hedging instead of disagreeing** — *"could possibly maybe perhaps"* — stand on the evidence or stand down. ([doubt-engine.md](conduct/doubt-engine.md))
+- **Treating user proposals as exempt** — same doubt pass as your own ideas. ([doubt-engine.md](conduct/doubt-engine.md))
+- **Skipping the pass under "just do it" license** — overrides clarifying questions, not safety pushback. ([doubt-engine.md](conduct/doubt-engine.md))
+- **Outsourcing doubt to the next turn.** ([doubt-engine.md](conduct/doubt-engine.md))
+- **Running the pass and hiding the result.** ([doubt-engine.md](conduct/doubt-engine.md))
+
 ## Engines
 
 - **Patterns sharing common suffixes without transitive output links** — Aho-Corasick misses them. ([pattern-detection.md](engines/pattern-detection.md))

@@ -24,9 +24,10 @@ The fixes for these are well-known to people who've shipped agents at scale. The
 
 ```
 agent-foundations/
-├── conduct/      ← 12 behavior modules: discipline, context, verification,
+├── conduct/      ← 13 behavior modules: discipline, context, verification,
 │                   delegation, tool-use, formatting, skill-authoring,
-│                   hooks, precedent, tier-sizing, web-fetch, failure-modes
+│                   hooks, precedent, tier-sizing, web-fetch, failure-modes,
+│                   doubt-engine
 ├── engines/      ← 9 algorithmic primitives: Aho-Corasick, Shannon entropy,
 │                   Beta-Bernoulli, Markov drift, Hunt-Szymanski LCS,
 │                   Zhang-Shasha tree edit, Tarjan SCC, Wald SPRT,
@@ -131,7 +132,7 @@ Full guide: [`recipes/system-prompt.md`](recipes/system-prompt.md).
 
 ### Behavior rules that survive long contexts
 
-[`conduct/`](conduct/) ships twelve modules. The lightest pull-in is just `discipline.md` (~700 tokens) — four stances (think-first, simplicity, surgical, goal-driven) that catch the majority of unsolicited refactors, premature actions, and over-helpful substitutions.
+[`conduct/`](conduct/) ships thirteen modules. The lightest pull-in is just `discipline.md` (~700 tokens) — four stances (think-first, simplicity, surgical, goal-driven) that catch the majority of unsolicited refactors, premature actions, and over-helpful substitutions.
 
 A heavier pull-in adds `context.md` (U-curve placement, checkpoint protocol), `verification.md` (independent checks, dry-run for destructive ops), and `failure-modes.md` (the 14-code taxonomy). That's the production starter pack.
 
