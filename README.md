@@ -42,9 +42,10 @@ agent-foundations/
 │                   action / system) — flat for ops, axes for review
 ├── runbooks/     ← 21 incident-response runbooks (one per F-code) with
 │                   Detect / Triage / Rollback / Post-incident steps
-├── recipes/      ← Adoption guides for 8 hosts: Claude Code, OpenAI
-│                   Agents SDK, Cursor, generic system prompt, LangChain,
-│                   Pydantic-AI, BAML, plus an eval-harness reference
+├── recipes/      ← 9 adoption recipes: Claude Code, OpenAI Agents SDK,
+│                   Cursor, LangChain, Pydantic-AI, BAML, generic
+│                   system prompt, eval-harnesses, stupid-agent-review
+│                   (cheap-tier mechanical verifier for rule-efficacy A/B)
 ├── docs/         ← Architecture overview + ADRs (0001 four-layers,
 │                   0002 taxonomy expansion — resolved via hybrid),
 │                   plus self-test.md (A/B fixture methodology)
@@ -240,6 +241,7 @@ A parallel **5-axis layer** lives at [`taxonomy/axes.md`](taxonomy/axes.md) — 
 | [`baml.md`](recipes/baml.md) | Function-shaped LLM calls, Jinja prompt blocks, `BamlError` |
 | [`system-prompt.md`](recipes/system-prompt.md) | Raw API / llama.cpp / Ollama wiring |
 | [`eval-harnesses.md`](recipes/eval-harnesses.md) | Benchmark suite reference: τ²-bench, AgentDojo, AgentHarm, SYCON-Bench, etc. |
+| [`stupid-agent-review.md`](recipes/stupid-agent-review.md) | Cheap-tier mechanical verifier auditing higher-tier output; the runtime behind A/B rule-efficacy testing |
 
 ---
 
@@ -308,7 +310,7 @@ Two architectural questions that earlier versions of the framework deferred have
 
 What remains genuinely external — and only adopters can close:
 
-- **Self-test fixtures.** [`docs/self-test.md`](docs/self-test.md) ships the A/B fixture methodology; **0 of 19 modules** currently have shipped fixtures. The framework is honest about being best-effort guidance, not measured-impact rules. This is the highest-leverage open contribution path.
+- **Self-test fixtures.** [`docs/self-test.md`](docs/self-test.md) ships the A/B fixture methodology; **1 of 19 modules** has a shipped fixture as of 2026-05-05 ([`tests/discipline.fixture.md`](tests/discipline.fixture.md) — `discipline.md` treatment passed 4/4, baseline failed 3/4 under a drift-inviting prompt). The runtime for scaling the rest is documented at [`recipes/stupid-agent-review.md`](recipes/stupid-agent-review.md). 18 modules remain operational hypotheses; this is the highest-leverage open contribution path.
 - **Real-world adoption signal.** Until a downstream project reports on living with the conduct, every module is a hypothesis.
 
 ---

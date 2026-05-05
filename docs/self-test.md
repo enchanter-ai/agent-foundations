@@ -91,7 +91,7 @@ Status as of the framework's current state. "Shipped" means a fixture file exist
 
 | Module | Primary failure prevented | Fixture status |
 |--------|--------------------------|----------------|
-| `discipline.md` | F04 task drift, F07 over-helpful substitution | Proposed (example above) |
+| `discipline.md` | F04 task drift, F07 over-helpful substitution | **Shipped** — see [`../tests/discipline.fixture.md`](../tests/discipline.fixture.md); 1 run logged, treatment passed 4/4, baseline failed 3/4 under drift-inviting prompt |
 | `doubt-engine.md` | F01 sycophancy (per-turn) | TODO |
 | `multi-turn-negotiation.md` | F01 sycophancy (cross-turn) | TODO |
 | `verification.md` | Unverified shipping claims | TODO |
@@ -111,7 +111,15 @@ Status as of the framework's current state. "Shipped" means a fixture file exist
 | `eval-driven-self-improvement.md` | Unverified self-improvement claims | TODO |
 | `skill-authoring.md` | Discovery failure (wrong skill fires) | TODO |
 
-The honest reading of this table: the framework has 0 shipped fixtures as of its initial state. Every module is an operational hypothesis. The table exists to track the work, not to claim it is done.
+The honest reading of this table: as of 2026-05-05 the framework has **1 shipped fixture out of 19 modules** (`discipline.md`). Every other module remains an operational hypothesis. The table exists to track the work, not to claim it is done.
+
+## Stupid-agent verification gate
+
+The fixture A/B above can be run by hand once; running it across every module on every change requires a runtime. The runtime is documented separately in [`../recipes/stupid-agent-review.md`](../recipes/stupid-agent-review.md). The short version:
+
+A *cheap-tier* LLM (Haiku, gpt-4o-mini) runs purely structural boolean tests against artifacts produced by a higher-tier subject. The cost asymmetry is the design — the subject is expensive because the task is hard; the verifier is cheap because the test is mechanical. The pattern composes from MAV (arxiv 2502.20379) for binary cheap-tier verification, Promptfoo for the runner, and Inspect-AI for the scorer harness. None of them alone name the full shape; the recipe is the framework's first published combination.
+
+This pattern is what makes the inventory above tractable. Without it, every fixture is hand-scored — which means most fixtures will never ship. With it, fixtures become CI-runnable, and the inventory's TODO column becomes a roadmap rather than a graveyard.
 
 ## How to add a test
 

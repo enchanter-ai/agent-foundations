@@ -49,7 +49,11 @@ A runtime callback fired on a specific event (PreToolUse, PostToolUse, UserPromp
 
 ## Validator (cheaper-tier check)
 
-A subagent on a lower tier that reviews a higher-tier agent's output. Catches shape errors and obvious mistakes before they propagate.
+A subagent on a lower tier that reviews a higher-tier agent's output. Catches shape errors and obvious mistakes before they propagate. The pattern's load-bearing form is documented at [`./recipes/stupid-agent-review.md`](./recipes/stupid-agent-review.md): a *cheap-tier* LLM running structural boolean tests against a higher-tier subject's artifact. The cost asymmetry is intentional — the verifier's literal mechanical reading is a feature, not a fallback.
+
+## A/B fixture
+
+A paired-run test that measures whether loading a conduct module changes agent behavior on a defined axis. Two identical runs — one without the module (baseline), one with (treatment) — scored against a binary or bounded pass criterion. Without the baseline run, you have not measured the module; you have measured the model. See [`./docs/self-test.md`](./docs/self-test.md) for methodology, [`./tests/`](./tests/) for shipped fixtures.
 
 ## Orchestrator
 
