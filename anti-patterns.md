@@ -109,7 +109,7 @@ This is **not the source of truth** — each pattern's home module is. But when 
 - **Logging the fix, not the failure.** ([failure-modes.md](conduct/failure-modes.md))
 - **Multiple codes on one entry** — pick the dominant one. ([failure-modes.md](conduct/failure-modes.md))
 - **Logging at verdict time only** — log hypothesis before, outcome after. ([failure-modes.md](conduct/failure-modes.md))
-- **"Couldn't find a matching code"** — propose a new one (F15+) in a PR. ([failure-modes.md](conduct/failure-modes.md))
+- **"Couldn't find a matching code"** — propose a new one (F22+) in a PR. ([failure-modes.md](conduct/failure-modes.md))
 
 ## Doubt engine
 
@@ -129,6 +129,15 @@ This is **not the source of truth** — each pattern's home module is. But when 
 - **Choosing SPRT `(p₀, p₁)` post-hoc to match observed data** — invalidates the test. ([sprt.md](engines/sprt.md))
 - **Idle-only segmentation in boundary detection** — multi-signal exists for a reason. ([boundary-segmentation.md](engines/boundary-segmentation.md))
 - **Confusing simplified Wagner-Fischer with true Zhang-Shasha** — document which version you ship. ([tree-edit.md](engines/tree-edit.md))
+
+## Conduct (recent additions)
+
+- **All-Add as the default** — appending every observation to working memory without pruning, leading to self-degradation. ([memory-hygiene.md](conduct/memory-hygiene.md))
+- **Spawn cap omitted from delegation prompts** — no per-subagent or session-wide token cap; total cost grows unbounded. ([cost-accounting.md](conduct/cost-accounting.md))
+- **Speculative evals** — adding eval cases for hypothetical bugs that haven't been observed. ([eval-driven-self-improvement.md](conduct/eval-driven-self-improvement.md))
+- **Sycophantic capitulation across turns** — flipping stance under sustained user pressure without new evidence. ([multi-turn-negotiation.md](conduct/multi-turn-negotiation.md))
+- **Blanket topic refusals** — refusing benign requests adjacent to refused topics (false-refusal cycle). ([refusal-and-recovery.md](conduct/refusal-and-recovery.md))
+- **Treating latency as a cost proxy** — assuming token cost and wall-clock latency move together; they don't. ([latency-budgeting.md](conduct/latency-budgeting.md))
 
 ## How to use this doc
 

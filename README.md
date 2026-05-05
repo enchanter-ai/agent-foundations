@@ -26,26 +26,28 @@ The fixes for these are well-known to people who've shipped agents at scale. The
 
 ```
 agent-foundations/
-├── conduct/      ← 18 behavior modules: discipline, context, verification,
+├── conduct/      ← 19 behavior modules: discipline, context, verification,
 │                   delegation, tool-use, formatting, skill-authoring,
 │                   hooks, precedent, tier-sizing, web-fetch, failure-modes,
 │                   doubt-engine, memory-hygiene, cost-accounting,
 │                   refusal-and-recovery, latency-budgeting,
-│                   eval-driven-self-improvement
+│                   eval-driven-self-improvement, multi-turn-negotiation
 ├── engines/      ← 12 algorithmic primitives: Aho-Corasick, Shannon entropy,
 │                   Beta-Bernoulli, Markov drift, Hunt-Szymanski LCS,
 │                   Zhang-Shasha tree edit, Tarjan SCC, Wald SPRT,
 │                   Jaccard-Cosine boundary segmentation, LLM Bandit,
 │                   Agentproof, Calibration
-├── taxonomy/     ← 21 named failure codes (F01–F21), one doc per code,
-│                   with signature, counter, examples, escalation,
-│                   plus multi-agent and alignment-failure clusters
+├── taxonomy/     ← 21 named failure codes (F01–F21) + axes.md (5-axis
+│                   hybrid mapping: memory / reflection / planning /
+│                   action / system) — flat for ops, axes for review
 ├── runbooks/     ← 21 incident-response runbooks (one per F-code) with
 │                   Detect / Triage / Rollback / Post-incident steps
-├── recipes/      ← Adoption guides for Claude Code, OpenAI Agents SDK,
-│                   Cursor, generic system prompt, and eval harnesses
+├── recipes/      ← Adoption guides for 8 hosts: Claude Code, OpenAI
+│                   Agents SDK, Cursor, generic system prompt, LangChain,
+│                   Pydantic-AI, BAML, plus an eval-harness reference
 ├── docs/         ← Architecture overview + ADRs (0001 four-layers,
-│                   0002 taxonomy expansion + deferred 5-axis decision)
+│                   0002 taxonomy expansion — resolved via hybrid),
+│                   plus self-test.md (A/B fixture methodology)
 ├── glossary.md   ← Unified terminology
 ├── anti-patterns.md  ← Cross-cutting catalog of what not to do
 └── CLAUDE.md     ← Repo-level instructions for agents editing this repo
@@ -96,8 +98,10 @@ Don't load everything. Start with the failure mode you're seeing, pull only the 
 | Latency unpredictable in long workflows | `latency-budgeting.md` |
 | Agent refuses benign requests / over-refuses | `refusal-and-recovery.md` |
 | Want to learn from observed failures | `eval-driven-self-improvement.md` + `precedent.md` |
+| User pressures across turns until you flip | `multi-turn-negotiation.md` + `doubt-engine.md` |
 | Doubt-engine F01-counter prose isn't measurable | `engines/calibration.md` |
 | Failure happened — need incident steps | `runbooks/F<NN>.md` |
+| Want to A/B-validate a module's impact | `docs/self-test.md` |
 | Evaluating agent conduct | `recipes/eval-harnesses.md` |
 
 The **production starter pack** is `discipline.md` + `context.md` + `verification.md` + `failure-modes.md` — about 4k tokens, catches the long tail.
@@ -167,7 +171,7 @@ Full guide: [`recipes/system-prompt.md`](recipes/system-prompt.md).
 
 ### Behavior rules that survive long contexts
 
-[`conduct/`](conduct/) ships fifteen modules. The lightest pull-in is just `discipline.md` (~700 tokens) — four stances (think-first, simplicity, surgical, goal-driven) that catch the majority of unsolicited refactors, premature actions, and over-helpful substitutions.
+[`conduct/`](conduct/) ships nineteen modules. The lightest pull-in is just `discipline.md` (~700 tokens) — four stances (think-first, simplicity, surgical, goal-driven) that catch the majority of unsolicited refactors, premature actions, and over-helpful substitutions.
 
 A heavier pull-in adds `context.md` (U-curve placement, checkpoint protocol), `verification.md` (independent checks, dry-run for destructive ops), and `failure-modes.md` (the F-code taxonomy summary). That's the production starter pack.
 
@@ -218,17 +222,22 @@ Free-text learning notes don't compound. Tagged ones do. [`taxonomy/`](taxonomy/
 
 Tag every entry in your failure log with one code. Now you can aggregate. Now you can learn.
 
-The multi-agent cluster (F15–F17) maps to the MAST taxonomy (arxiv 2503.13657); the alignment cluster (F18–F21) draws from Anthropic, OpenAI, and DeepMind safety research. F19 and F20 are awareness codes — log them if observed; the counter is red-team probes and blind capability evaluation, not runtime detection. See [`taxonomy/README.md`](taxonomy/README.md) § Structural note for the deferred Option A/B decision on flat-vs-modular taxonomy structure.
+The multi-agent cluster (F15–F17) maps to the MAST taxonomy (arxiv 2503.13657); the alignment cluster (F18–F21) draws from Anthropic, OpenAI, and DeepMind safety research. F19 and F20 are awareness codes — log them if observed; the counter is red-team probes and blind capability evaluation, not runtime detection.
+
+A parallel **5-axis layer** lives at [`taxonomy/axes.md`](taxonomy/axes.md) — every F-code is mapped to one of memory / reflection / planning / action / system (per AgentErrorTaxonomy, arxiv 2509.25370). Use flat codes for grep-able logs, axes for structural pressure analysis. The hybrid is intentional and documented in [`docs/adr/0002-taxonomy-expansion.md`](docs/adr/0002-taxonomy-expansion.md).
 
 ### Adoption guides, not just docs
 
-[`recipes/`](recipes/) gives you the wiring for the four most common host platforms plus an eval-harness reference. No hand-waving — concrete file paths, concrete config, a verification step you can actually run.
+[`recipes/`](recipes/) gives you the wiring for seven host platforms plus an eval-harness reference. No hand-waving — concrete file paths, concrete config, a verification step you can actually run.
 
 | Recipe | What it covers |
 |--------|----------------|
 | [`claude-code.md`](recipes/claude-code.md) | `@`-imports, hook enforcement wiring, scope precedence |
 | [`openai-agents.md`](recipes/openai-agents.md) | Python SDK integration, `Agent.clone()`, guardrail patterns |
 | [`cursor.md`](recipes/cursor.md) | `.cursor/rules/` activation, scoped pull-ins |
+| [`langchain.md`](recipes/langchain.md) | Middleware list enforcement, LangGraph interrupts, propagation |
+| [`pydantic-ai.md`](recipes/pydantic-ai.md) | `Agent[Deps, Output]` generics, output validation, tool retries |
+| [`baml.md`](recipes/baml.md) | Function-shaped LLM calls, Jinja prompt blocks, `BamlError` |
 | [`system-prompt.md`](recipes/system-prompt.md) | Raw API / llama.cpp / Ollama wiring |
 | [`eval-harnesses.md`](recipes/eval-harnesses.md) | Benchmark suite reference: τ²-bench, AgentDojo, AgentHarm, SYCON-Bench, etc. |
 
@@ -290,14 +299,17 @@ See [`docs/architecture/README.md`](docs/architecture/README.md) for the structu
 
 ---
 
-## Open structural decisions
+## Resolved structural decisions
 
-Two known architectural questions are deferred to community deliberation rather than decided unilaterally:
+Two architectural questions that earlier versions of the framework deferred have now been resolved:
 
-- **Taxonomy structure** — flat F-codes (current) vs. 5-axis modular structure proposed by AgentErrorTaxonomy (arxiv 2509.25370). Migrating is a breaking change. See [`taxonomy/README.md`](taxonomy/README.md) § Structural note.
-- **Awareness vs. operational codes** — F19 (alignment faking) and F20 (sandbagging) are alignment-research concepts. Some adopters will want them in main `taxonomy/`; some will want a separate annex. Currently included in main with explicit awareness flags.
+- **Taxonomy structure (resolved 2026-05-05).** Flat F-codes (current) AND 5-axis modular structure (AgentErrorTaxonomy, arxiv 2509.25370) — both layers ship. Hybrid path: F01–F21 stays as the operational identifier; [`taxonomy/axes.md`](taxonomy/axes.md) maps each code to one of memory / reflection / planning / action / system. Documented in [`docs/adr/0002-taxonomy-expansion.md`](docs/adr/0002-taxonomy-expansion.md).
+- **F19/F20 placement (resolved 2026-05-05).** Awareness codes stay in main `taxonomy/` with explicit `(awareness)` flag at the index entry and at the top of each file. Adopters who don't need alignment-research codes can filter by tag rather than file path.
 
-Open a tracking issue if you have a strong opinion. The framework grows by deliberation, not speculation.
+What remains genuinely external — and only adopters can close:
+
+- **Self-test fixtures.** [`docs/self-test.md`](docs/self-test.md) ships the A/B fixture methodology; **0 of 19 modules** currently have shipped fixtures. The framework is honest about being best-effort guidance, not measured-impact rules. This is the highest-leverage open contribution path.
+- **Real-world adoption signal.** Until a downstream project reports on living with the conduct, every module is a hypothesis.
 
 ---
 

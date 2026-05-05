@@ -23,10 +23,11 @@ How the four moving parts of agent-foundations compose. Read once; reference whe
 
 | Layer | Surface | Role |
 |-------|---------|------|
-| `conduct/` | 12 rule modules | What the agent should do or avoid |
-| `engines/` | 9 algorithm docs | What the agent should compute |
-| `taxonomy/` | 14 failure-code docs | How the agent names what went wrong |
-| `recipes/` | 4 host adoption guides | How a project picks up the framework |
+| `conduct/` | 19 rule modules | What the agent should do or avoid |
+| `engines/` | 12 algorithm docs | What the agent should compute |
+| `taxonomy/` | 21 failure-code docs (+ axes.md) | How the agent names what went wrong |
+| `recipes/` | 8 host adoption guides | How a project picks up the framework |
+| `runbooks/` | 21 incident-response runbooks | How to triage and recover per failure code |
 
 `anti-patterns.md` and `glossary.md` cross-cut all four.
 
@@ -86,7 +87,7 @@ Adjacent docs that *describe* the framework but aren't part of it (this file, `a
 ## Stability commitments
 
 - **Conduct module names** are stable. Renaming `discipline.md` would break every adopter's `CLAUDE.md`.
-- **Taxonomy F-codes** are append-only. F03 is always context-decay. F15+ is for new patterns; existing codes are not renumbered.
+- **Taxonomy F-codes** are append-only. F03 is always context-decay. F22+ is for new patterns; existing codes are not renumbered.
 - **Engine names** can be renamed if the algorithm name is wrong. Document the rename in an ADR.
 - **Recipe paths** are loose; recipes are the most volatile surface and may be split or merged as host platforms evolve.
 

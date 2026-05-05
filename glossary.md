@@ -159,3 +159,33 @@ H(s) = - Σ p(c) · log₂ p(c)
 ```
 
 A measure of how "random" a string looks. Used to detect generated tokens (secrets, hashes) without a pattern list ([`./engines/entropy-analysis.md`](./engines/entropy-analysis.md)).
+
+---
+
+## All-Add
+
+Anti-pattern memory strategy: appending every observation to working memory without pruning, leading to self-degradation as irrelevant or stale entries crowd out load-bearing ones. The correct alternative is selective, expiry-aware logging. See [`./conduct/memory-hygiene.md`](./conduct/memory-hygiene.md).
+
+## Awareness code
+
+Taxonomy classification for alignment-research failure modes (F19, F20) that are included for completeness but are not expected in routine operational workflows. Awareness codes carry an explicit notice at the top of their per-code doc; their Counter sections reflect red-team and evaluation-protocol responses rather than runtime detection patterns. See [`./taxonomy/README.md`](./taxonomy/README.md) § Per-doc shape.
+
+## Axes (5-axis taxonomy mapping)
+
+An orthogonal layer mapping every F-code to one of five structural axes: memory, reflection, planning, action, or system. Adopted from AgentErrorTaxonomy (arxiv 2509.25370). The flat F01–F21 numbering remains the operational logging identifier; axes are the structural review layer. See [`./taxonomy/axes.md`](./taxonomy/axes.md).
+
+## BamlError
+
+Base exception class in BAML's parser; subclasses indicate specific parse failure modes. See [`./recipes/baml.md`](./recipes/baml.md).
+
+## DFA (Deterministic Finite Automaton)
+
+A finite state machine used to evaluate temporal safety policies in [`./engines/agentproof.md`](./engines/agentproof.md). Given a sequence of agent actions, the DFA advances through states and flags sequences that violate a declared policy.
+
+## Number of Flip
+
+SYCON-Bench metric: how often a model shifts stance under sustained user pressure across a session. Complements Turn of Flip (which measures how quickly the first flip occurs). See [`./conduct/multi-turn-negotiation.md`](./conduct/multi-turn-negotiation.md) and [`./engines/calibration.md`](./engines/calibration.md).
+
+## Turn of Flip
+
+SYCON-Bench metric: how quickly a model conforms to user pressure — specifically, at which turn (counted from the first pushback) the model first abandons a well-founded position. Lower Turn of Flip indicates higher sycophancy risk. See [`./conduct/multi-turn-negotiation.md`](./conduct/multi-turn-negotiation.md) and [`./engines/calibration.md`](./engines/calibration.md).
