@@ -91,27 +91,39 @@ Status as of the framework's current state. "Shipped" means a fixture file exist
 
 | Module | Primary failure prevented | Fixture status |
 |--------|--------------------------|----------------|
-| `discipline.md` | F04 task drift, F07 over-helpful substitution | **Shipped** — see [`../tests/discipline.fixture.md`](../tests/discipline.fixture.md); 1 run logged, treatment passed 4/4, baseline failed 3/4 under drift-inviting prompt |
-| `doubt-engine.md` | F01 sycophancy (per-turn) | TODO |
-| `multi-turn-negotiation.md` | F01 sycophancy (cross-turn) | TODO |
-| `verification.md` | Unverified shipping claims | TODO |
-| `context.md` | F03 context decay, F05 instruction attenuation | TODO |
-| `delegation.md` | F09 parallel race, subagent scope creep | TODO |
-| `failure-modes.md` | Logging discipline (indirect) | TODO |
-| `tool-use.md` | F06 premature action, F08 tool mis-invocation | TODO |
-| `formatting.md` | Format-model mismatch | TODO |
+| `discipline.md` | F04 task drift, F07 over-helpful substitution | **Shipped** — see [`../tests/discipline.fixture.md`](../tests/discipline.fixture.md); treatment passed 4/4, baseline failed 3/4 under drift-inviting prompt; clear behavioral delta |
+| `doubt-engine.md` | F01 sycophancy (per-turn) | **Shipped** — [`../tests/doubt-engine.fixture.md`](../tests/doubt-engine.fixture.md); both runs 4/4; **no behavioral delta** on Sonnet (likely training contamination + robust default) |
+| `multi-turn-negotiation.md` | F01 sycophancy (cross-turn) | **Shipped** — [`../tests/multi-turn-negotiation.fixture.md`](../tests/multi-turn-negotiation.fixture.md); both runs 4/4; **no behavioral delta** on Sonnet single-prompt approximation |
+| `verification.md` | Unverified shipping claims | **Shipped** — [`../tests/verification.fixture.md`](../tests/verification.fixture.md); both runs 4/4; **no behavioral delta** on Sonnet (baseline cited module by name unprompted — confirmed training contamination) |
+| `context.md` | F03 context decay, F05 instruction attenuation | TODO (needs long-context fixture) |
+| `delegation.md` | F09 parallel race, subagent scope creep | TODO (needs subagent-graph fixture) |
+| `failure-modes.md` | Logging discipline (indirect) | **Shipped** — [`../tests/failure-modes.fixture.md`](../tests/failure-modes.fixture.md); both runs 4/4; **no behavioral delta** — clearest training-contamination case (baseline cited F-codes by number unprompted) |
+| `tool-use.md` | F06 premature action, F08 tool mis-invocation | **Shipped** — [`../tests/tool-use.fixture.md`](../tests/tool-use.fixture.md); both runs 4/4; **no behavioral delta** on Sonnet (likely contamination; may discriminate on weaker tiers) |
+| `formatting.md` | Format-model mismatch | **Shipped** — [`../tests/formatting.fixture.md`](../tests/formatting.fixture.md); treatment 4/4, baseline 3/4 (missed sandwich-bottom restatement); **clear behavioral delta** |
 | `hooks.md` | Blocking hook misuse | TODO |
 | `precedent.md` | Repeated operational failures | TODO |
 | `tier-sizing.md` | Tier-mismatch cost and quality loss | TODO |
 | `web-fetch.md` | F02 fabrication from unverified web content | TODO |
 | `memory-hygiene.md` | Stale-memory-driven errors | TODO |
-| `refusal-and-recovery.md` | Premature or over-broad refusal | TODO |
+| `refusal-and-recovery.md` | Premature or over-broad refusal | **Shipped** — [`../tests/refusal-and-recovery.fixture.md`](../tests/refusal-and-recovery.fixture.md); both runs 4/4; **no behavioral delta** — well-calibrated baseline did not over-refuse (regression-test value) |
 | `cost-accounting.md` | Budget overrun (indirect) | TODO |
 | `latency-budgeting.md` | Latency overrun (indirect) | TODO |
 | `eval-driven-self-improvement.md` | Unverified self-improvement claims | TODO |
 | `skill-authoring.md` | Discovery failure (wrong skill fires) | TODO |
 
-The honest reading of this table: as of 2026-05-05 the framework has **1 shipped fixture out of 19 modules** (`discipline.md`). Every other module remains an operational hypothesis. The table exists to track the work, not to claim it is done.
+The honest reading of this table: as of 2026-05-05 the framework has **8 shipped fixtures out of 19 modules**. Of those 8, only **2 show clear behavioral delta** (`discipline.md` under a drift-inviting prompt; `formatting.md` on the GPT-5 sandwich rule). The remaining 6 show form-only delta — the agent reaches the same outcome in both baseline and treatment, but the treatment cites the module by name and runs explicit tests. **The 11 untested modules remain operational hypotheses.**
+
+## What the 2026-05-05 batch revealed
+
+Running 7 fixtures in parallel on Claude Sonnet 4.6 produced a uniform finding the framework's honest-numbers principle requires us to surface: **most baselines passed 4/4 without the module loaded.** Three explanations, none mutually exclusive:
+
+1. **Training-data contamination.** Multiple baselines cited the framework's terminology unprompted: `verification.fixture.md`'s baseline used "DEPLOY claim with stale metadata" verbatim; `failure-modes.fixture.md`'s baseline cited "F02 Fabrication" by number along with the counter; `tool-use.fixture.md`'s baseline cited "the tool-use hygiene rules in this project" without having read tool-use.md. Sonnet 4.6 has been trained on agent-foundations text or close paraphrases of it.
+2. **Frontier-tier robustness.** Sonnet 4.6 may simply be conservative enough that the failure modes the modules are designed to prevent don't fire on this tier. The modules may be load-bearing on Haiku or older mid-tier models that the fixtures were not run against.
+3. **Pass criteria too coarse.** Most pass criteria measure outcome ("did the agent re-assert the concern", "did it demand test evidence"). They don't measure rigor of reasoning ("did it cite the four-step pass by name"). A more discriminating fixture would score reasoning-form, but that becomes a recall test rather than a behavior test.
+
+The one fixture that *did* show clear behavioral delta — `formatting.md` — discriminated on a **structural rule** (sandwich-method bottom restatement) that cannot be backfilled from general-purpose careful reasoning. This suggests a hypothesis worth testing across more fixtures: **modules prescribing specific structural output behaviors discriminate more reliably than modules prescribing reasoning practices.** Reasoning practices may be absorbed during training; structural behaviors are model-family-specific and require explicit instruction.
+
+The framework's response to this finding is not to weaken the modules or hide the result. It is to ship the fixtures with the honest verdict logged, and to design future fixtures to test on weaker tiers where contamination is less likely and the modules' marginal impact is more measurable.
 
 ## Stupid-agent verification gate
 
