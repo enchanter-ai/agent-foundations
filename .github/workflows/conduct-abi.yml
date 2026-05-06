@@ -1,0 +1,8 @@
+name: conduct-abi
+on: [pull_request, push]
+jobs:
+  abi:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: bash scripts/conduct-abi-check.sh ./conduct
