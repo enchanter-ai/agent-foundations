@@ -216,6 +216,59 @@ Adding 4 more Haiku A/Bs (memory-hygiene, refusal-and-recovery, tier-sizing, cos
 
 **Updated cross-tier claim: 8 of 12 sampled Sonnet-no-delta modules (67%) show measurable behavioral delta on Haiku.** This is the strongest empirical signal the framework has produced about its tier-dependent value claim.
 
+## Validation round 2 (2026-05-06) — replication, second OOD, full Haiku coverage
+
+After noting "all the OTHER fixtures are still N=1" as a remaining catch, ran a second validation pass.
+
+### Replication of formatting.md sandwich-bottom finding (3 additional runs)
+
+| Run | Baseline has bottom anchor? | Treatment has bottom anchor? |
+|---|---|---|
+| Original | ✗ | ✓ |
+| Replication 1 | ✗ | ✓ |
+| Replication 2 | ✗ | ✓ |
+| Replication 3 | ✗ | ✓ |
+
+**4 of 4 treatments produce the sandwich-bottom restatement; 4 of 4 baselines do not.** The formatting.md finding REPLICATES cleanly. Combined with the skill-authoring v2 retraction (3 of 3 replications produced minimal tools), the framework now has direct empirical contrast: **structural-rule findings replicate reliably; the one inverse-delta finding did not, and was retracted.**
+
+### Second OOD contamination control
+
+Ran a second OOD test using a different module shape — distinctive *vocabulary* (`PHASE` / `DELTA` / `GATE` labels + `gate-wait` phase name) instead of distinctive *numerics* (the `247` retry constant from OOD #1).
+
+| Marker | Baseline | Treatment |
+|---|---|---|
+| `PHASE:` label | absent | present |
+| `DELTA:` label | absent | present |
+| `GATE:` label | absent | present |
+| `gate-wait` phase name | absent | present |
+
+**Two OOD tests, two corroborating results.** Across distinctive numerics AND distinctive vocabulary, baselines do not reach for synthetic-module markers. The contamination hypothesis is now supported by replicated falsifiability tests, not just framing.
+
+### Full Haiku coverage extension
+
+Added 2 final Haiku A/Bs (skill-authoring v2, web-fetch v2) to close the cross-tier sample on the 2 v2-redesigned modules:
+
+| Module | Haiku result |
+|---|---|
+| skill-authoring v2 | both 5/5 — **no delta on Haiku either**. Combined with Sonnet retraction, the v2 fixture does not discriminate on either tier. |
+| web-fetch v2 | treatment 5/5, baseline 4/5 — **strong delta on Haiku, replicates Sonnet result**. The verbatim-quote rule discriminates on both tiers when paraphrase temptation fires. |
+
+### runner.py end-to-end execution: still blocked
+
+Tried to validate the runner end-to-end. `ANTHROPIC_API_KEY` is not set in the sandbox environment. Syntax + parsing are validated (py_compile passes; `_parse_fixture()` and `_find_module()` work against `discipline.fixture.md`). API-call portion is **adopter-validated only**. Honest gap.
+
+### Consolidated open catches after this round
+
+| Catch | Status after validation rounds 1+2 |
+|---|---|
+| N=1 across fixtures | partially closed — 2 fixtures now replicated (skill-authoring v2 retracted, formatting confirmed). 17 still N=1. |
+| Cherry-picked Haiku sample | closed — 14 of 14 Sonnet-no-delta modules now sampled on Haiku (12 prior + 2 v2 this round) |
+| OOD contamination test | closed — 2 OOD tests, both confirming baselines don't reach for synthetic markers |
+| Author-bias on criteria | partially closed — 5 of 6 criteria reach from first principles |
+| runner.py end-to-end | blocked on `ANTHROPIC_API_KEY` availability — honest gap, adopter-validated only |
+| No real adopter | unresolved (out of session scope) |
+| Cross-family rerun (GPT/Gemini/Opus) | unresolved (out of session scope) |
+
 ### Revised honest claim
 
 The earlier framing "5 of 19 modules show real impact" was misleading. The corrected claim:

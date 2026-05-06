@@ -74,3 +74,19 @@ The v1 fixture had a design failure: source paragraph in context removed paraphr
 This is exactly the pattern the v2 redesign was designed to surface. Treatment recognized that working notes are not verbatim source text and refused to fill the quote field. Baseline copy-pasted the working-notes summary as the quote, completing the paraphrase-as-quote F02 failure the module is designed to prevent.
 
 The redesign worked: removing the source paragraph from context and presenting only the agent's own working notes is what the verbatim-quote rule actually counters in production.
+
+### Run 3 — Haiku tier on v2 prompt (2026-05-06)
+
+Re-ran the v2 fixture with `claude-haiku-4-5`.
+
+| Check | Haiku Baseline | Haiku Treatment |
+|---|---|---|
+| URL matches | ✓ | ✓ |
+| Date null | ✓ | ✓ |
+| source_type valid | ✓ "official" | ✓ "official" |
+| **Quote NOT paraphrased reconstruction** | ✗ — `quote` field reproduces the working-notes summary verbatim | ✓ — `quote: null` with explicit F02 rationale: "RUN A violated F02 (paraphrase-as-quote)" |
+| All 4 fields present | ✓ | ✓ |
+
+**Haiku verdict (v2): TREATMENT 5/5, BASELINE 4/5. STRONG behavioral delta — REPLICATES the Sonnet result.**
+
+Cross-tier consolidated finding: the v2 web-fetch fixture discriminates **on both Sonnet and Haiku**. The verbatim-quote rule is one of the framework's most reliably load-bearing patterns when paraphrase temptation actually fires. The original v1 fixture failed because the source paragraph was in context; v2 with working-notes-only triggers the failure mode the module counters, on both tiers tested.

@@ -59,3 +59,20 @@ This suggests a hypothesis worth testing across more fixtures: **modules that pr
 - **Sandwich is a "soft" check.** A reviewer scoring "is this restatement at the bottom actually a sandwich anchor or just a closing remark?" can be ambiguous. The treatment's `**Reminder:**` section is unambiguous; in edge cases (a brief closing sentence) the call is interpretable. Prefer fixtures whose pass conditions are textually unambiguous.
 - **Other format rules untested here.** This fixture only tests the sandwich rule. The module's prefill, stop-sequence, and per-target-tag rules are separate behaviors that need their own fixtures.
 - **Generalization needed.** One discriminating fixture is not proof the module works broadly — only that it works for the GPT-5 sandwich rule on this prompt class. Adjacent fixtures: o-series stripped-minimal, Gemini few-shot, Claude prefill.
+
+## Replication test (2026-05-06) — 3 additional runs on the same v1 fixture
+
+After noting that the original finding was N=1, ran 3 fresh replications with `claude-sonnet-4-6` as the subject.
+
+| Run | Baseline has sandwich bottom? | Treatment has sandwich bottom? |
+|---|---|---|
+| Original (2026-05-05) | ✗ | ✓ |
+| Replication 1 | ✗ | ✓ ("final three-line paragraph restating role, enforcement rules, and tone") |
+| Replication 2 | ✗ | ✓ ("Core rules summary (recall anchor)") |
+| Replication 3 | ✗ | ✓ ("Reminder — apply all three rules on every review...") |
+
+**4-run aggregate: 4 of 4 treatments produce a sandwich-bottom restatement; 4 of 4 baselines do not.** The original finding REPLICATES across all replications. This is the framework's strongest empirically-validated behavioral delta on Sonnet to date.
+
+The discriminating mechanism: the sandwich-method rule is **mechanical and structurally specific** — either the agent knows GPT attends to bottom-of-prompt and adds a recall anchor, or it doesn't. Sonnet baseline reasoning ("be thorough at the top") doesn't naturally produce a bottom anchor; the module's explicit prescription does.
+
+This validates the cross-batch hypothesis: **modules prescribing specific structural output behaviors discriminate reliably and replicate.** The 4-of-4 result on this fixture is contrasted against `skill-authoring v2`, where 3 of 4 replications produced the *same* (minimal-tools) result, retracting the prior "inverse delta" finding.

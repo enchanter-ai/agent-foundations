@@ -90,3 +90,21 @@ Ran the v2 treatment three additional times under identical conditions:
 **Corrected verdict (4-run aggregate): TREATMENT 4-of-4 inferred "Use when" clause; 3-of-4 minimal tools; 1-of-4 over-granted to add Grep. Effective treatment pass rate: ~95% on the discriminating tools check. The module IS load-bearing for the trigger-clause discrimination; tool-whitelist discrimination is high-variance even with the module.**
 
 The framework's prior "inverse delta finding" should be read as **a methodology lesson, not a discovery about the module**. The lesson: N=1 results are anecdotes, even when fixtures are well-designed. Always replicate before declaring a finding. The framework owes adopters this correction more than it owes them an interesting headline.
+
+### Run 3 — Haiku tier on v2 prompt (2026-05-06)
+
+Re-ran the v2 fixture with `claude-haiku-4-5`.
+
+| Check | Haiku Baseline | Haiku Treatment |
+|---|---|---|
+| "Use when" inferred | ✓ ("when you need to deduplicate claims") | ✓ ("when the user provides a claims file needing deduplication, or after a research or extraction skill produces a multi-source claims list") |
+| Tools at most [Read, Write] | ✓ | ✓ |
+| Third person | ✓ | ✓ |
+| All 4 fields | ✓ | ✓ |
+| Description length | ✓ | ✓ |
+
+**Haiku verdict (v2): BOTH 5/5. NO behavioral delta on Haiku either.**
+
+Treatment's "Use when" is more discoverable (specific triggers + Do-not-use clause), but the discriminating pass criteria all pass in baseline. **Cross-tier consolidated finding: skill-authoring v2 fixture does not discriminate on either tier.** Either the fixture is still under-designed (the "Use when" rule is reachable from general knowledge of skill systems) or this module's pattern is widely documented enough to be absorbed across tiers.
+
+Honest verdict: **the original "inverse delta" was variance; the corrected reading shows no measurable delta either way.** The module may still be load-bearing on weaker tiers (Haiku-mini or smaller) — untested here.
