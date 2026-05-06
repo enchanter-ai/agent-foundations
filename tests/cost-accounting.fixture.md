@@ -32,7 +32,11 @@
 | Cap in body | ✓ inside `<constraints>` block | n/a |
 | Task + scope fence | ✓ both present | n/a |
 
-**Verdict: BASELINE 5/5. TREATMENT FAILED to load the module file — error: "The file does not exist at that path".**
+**Verdict (initial run, 2026-05-05): BASELINE 5/5. Treatment errored on file Read.**
+
+**Re-run (2026-05-06): TREATMENT 5/5.** Treatment Read the module successfully on retry and produced a delegation prompt with: explicit numeric tool-call cap of 15 (Gate 2 default), partial-findings fallback ("If you reach 15 without completing, return your partial findings with a note"), self-applying second-person language ("You may invoke at most 15 tool calls"), cap embedded in the prompt body inside a labeled `**TOOL-CALL CAP**` block, plus task description and scope fence. All 5 pass criteria met.
+
+**Cross-run verdict: BOTH 5/5. NO BEHAVIORAL DELTA on this model** — the cap-in-prompt pattern is widely known; baseline produced equivalent budget controls (8 URLs, 8 KB per page, 400 words) without the module loaded. Likely contamination on the structural budget-cap pattern.
 
 ## Honest reading
 

@@ -50,3 +50,19 @@ The prediction failed because Sonnet has internalized the fail-open / advisory-h
 - The fail-open / advisory-hook concept is widely documented (CI hooks, git hooks). Sonnet likely absorbed it from broader training.
 - The prediction's failure is itself a finding: **fixture-author's expected-discrimination scoring is unreliable when the module's concepts are also present in general training data.** Future fixture designs should weight pattern obscurity heavily.
 - A weaker-tier subject (Haiku) probably *would* write `set -e` blocking hooks by default. Untested here.
+
+## Run 2 — Haiku tier (2026-05-06)
+
+Re-ran the same A/B with `claude-haiku-4-5` as the subject.
+
+| Check | Haiku Baseline | Haiku Treatment |
+|---|---|---|
+| Hook exits 0 unconditionally | ✓ | ✓ |
+| No `set -e` propagation | ~ no `set -uo pipefail`; relies on `\|\| true` | ✓ adds `set -uo pipefail` for safety |
+| Lint failure does not propagate | ✓ | ✓ |
+| File extension check | ~ js/jsx only | ✓ js/jsx + ts/tsx |
+| Lint results surfaced | ✓ | ✓ |
+
+**Haiku verdict: TREATMENT 5/5, BASELINE 4/5. Marginal delta** — both write fail-open hooks but treatment adds shell safety options and broader extension coverage.
+
+**Cross-tier finding:** Sonnet showed no delta (both 5/5); Haiku shows marginal delta. The fail-open / advisory pattern appears widely absorbed across tiers — not the strong contamination-discrimination case the framework expected. The module's marginal value on this artifact is the named safety options and scope clarity, not the fail-open behavior itself.

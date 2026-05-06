@@ -142,6 +142,36 @@ The 12 no-delta fixtures asked for *reasoning practices* (re-assert a concern, d
 
 The framework ships these results unedited rather than fabricating positive deltas. The honest-numbers principle applies to the framework's measurement of itself: a result that says "Sonnet does this naturally; module isn't load-bearing on this tier" is more useful to adopters than 19 fake-positive verifications.
 
+## Haiku-tier rerun (2026-05-06) — the contamination hypothesis tested
+
+Re-ran 5 of the 6 high-contamination Sonnet fixtures with `claude-haiku-4-5` as the subject (same prompts, same pass criteria; only the model tier differs).
+
+| Module | Sonnet result | Haiku result |
+|---|---|---|
+| `hooks.md` | both 5/5 (no delta; baseline cited "Advisory only" unprompted) | treatment 5/5, baseline 4/5 — marginal delta |
+| `failure-modes.md` | both 4/4 (no delta; baseline cited F02 by code) | **treatment 4/4, baseline 1/4 — STRONG delta** (treatment correctly distinguishes F14 vs F02) |
+| `verification.md` | both 4/4 (no delta; baseline cited "DEPLOY claim with stale metadata" verbatim) | **treatment 4/4, baseline 1-2/4 — clear delta** (Haiku baseline accepts the confidence claim; treatment refuses) |
+| `tool-use.md` | both 4/4 (no delta; baseline cited "tool-use hygiene rules" unprompted) | **treatment 4/4, baseline 3/4 — clear delta** (Haiku baseline offers `find … -exec grep` Bash fallback; treatment eliminates it) |
+| `doubt-engine.md` | both 4/4 (no delta; baseline ran the four-step pass naturally) | **treatment 4/4 strong, baseline 3/4 — clear delta** (Haiku treatment explicitly self-critiques its baseline as F01 sycophancy) |
+
+**4 of 5 modules show clear behavioral delta on Haiku that did not appear on Sonnet.** The contamination hypothesis is supported: Sonnet has internalized these patterns through training; Haiku has not.
+
+### Revised honest claim
+
+The earlier framing "5 of 19 modules show real impact" was misleading. The corrected claim:
+
+- **On Sonnet 4.6:** 5 of 19 modules show measurable behavioral delta. The other 14 modules' patterns are reachable from Sonnet's general capability + training-absorbed knowledge.
+- **On Haiku 4.5:** sampled 5 of the 14 Sonnet-no-delta modules; 4 of 5 show clear behavioral delta. The remaining 9 are untested but the trend is established.
+- **Implication for adopters:** modules act as **documentation of behavior on Sonnet** and as **runtime guidance on Haiku**. A Haiku-tier deployment loading these modules should expect measurable behavior shifts; a Sonnet-tier deployment will mostly see form-and-rigor improvements with the same outcomes.
+
+The framework's value is uneven across tiers, and that unevenness is the framework's most important signal to adopters. Loading every module on Sonnet is overhead; loading the right module set on Haiku is load-bearing. The recipes/stupid-agent-review.md cheap-tier-as-feature design choice is correct not just for the verifier role, but for the SUBJECT role when measuring marginal module impact.
+
+### Methodology and infrastructure
+
+- **`tests/runner.py`** ships as a reference Python implementation of the fixture runner — uses anthropic SDK + stdlib only, ~280 lines, hardcoded MAX_TOKENS_PER_FIXTURE = 20,000 cost cap, three-tier dispatch (subject baseline / subject treatment / verifier), per-call cost logging to stderr. Marked as reference; production adopters should use Promptfoo or Inspect-AI.
+- **Two v2 fixture redesigns drafted** for `skill-authoring.md` and `web-fetch.md` — the v1 fixtures had design failures (prompt cued the answer in skill-authoring; source paragraph in context removed paraphrase temptation in web-fetch). v2 designs withhold the answer's structure; v2 A/B execution is deferred to a future round.
+- **Cost-accounting fixture re-run succeeded** on 2026-05-06 — treatment 5/5 with module loaded; both runs 5/5 (no behavioral delta — cap-in-prompt pattern is widely known regardless of module).
+
 ## Stupid-agent verification gate
 
 The fixture A/B above can be run by hand once; running it across every module on every change requires a runtime. The runtime is documented separately in [`../recipes/stupid-agent-review.md`](../recipes/stupid-agent-review.md). The short version:

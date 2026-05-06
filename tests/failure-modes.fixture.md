@@ -61,3 +61,20 @@ This is conclusive evidence that the model has been trained on the agent-foundat
 - **Likely discriminates on adjacent taxonomies.** If the fixture was rewritten with novel F-codes the model has not seen (F22+ proposed but not yet trained on), the baseline would not cite them and the treatment would. Worth running once the framework adds new codes.
 - **The contamination is itself a positive signal for the framework.** If the model has internalized this taxonomy, the framework's text has propagated. That is what an open-source conduct framework wants — but it makes A/B-testing the module harder, not easier.
 - **Methodology lesson.** When a baseline cites module-specific identifiers (F02, named counters, file paths) unprompted, the fixture is contaminated. Future fixtures for taxonomy-style modules should use scenarios where the canonical answer is *not* in training data — e.g., a custom internal taxonomy or a recently-added F-code.
+
+## Run 2 — Haiku tier (2026-05-06)
+
+Re-ran the same A/B with `claude-haiku-4-5` as the subject.
+
+| Check | Haiku Baseline | Haiku Treatment |
+|---|---|---|
+| F-code cited by number | ~ "F02-type error" (vague reference) | ✓ "F14 version-drift" by code AND name |
+| Code name stated | ~ generic "F02-type" without the name "Fabrication" | ✓ "version-drift" stated |
+| Counter stated | ~ generic "API validation as a pre-submit step" | ✓ verbatim counter "Check your model capability registry and current docs before emitting" |
+| No primary mis-assignment | ✗ called it F02; treatment correctly identifies F14 (function exists in older versions) | ✓ correctly distinguishes F14 from F02 with rationale |
+
+**Haiku verdict: TREATMENT 4/4, BASELINE 1/4. STRONG behavioral delta.**
+
+**Most striking finding:** treatment made a finer-grained taxonomic distinction (F14 vs F02) that baseline missed. The module enabled the Haiku subject to *correctly* identify version-drift over fabrication because the function exists in older Stripe versions — not invented. Baseline collapsed to "F02-type" without the precision the taxonomy provides.
+
+**Cross-tier finding:** Sonnet showed no delta (both 4/4 by recall); Haiku shows strong delta because the module enables taxonomic precision the model can't recall on its own. **The module IS load-bearing on Haiku.**

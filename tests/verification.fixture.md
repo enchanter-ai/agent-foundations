@@ -56,3 +56,20 @@ The treatment's distinguishing feature is *form*: a structured rule-by-rule chec
 - **Training contamination is the dominant signal here.** The baseline's verbatim citation of module terminology means we cannot measure the module's marginal impact on this model. The fixture's value on Sonnet is as a regression test ("does loading the module break the correct behavior?") rather than as a delta detector.
 - **Likely load-bearing on weaker tiers.** A Haiku-tier subject without the verification language in its training data would probably accept "the tests pass" at face value. Untested here.
 - **Methodology lesson.** When the baseline produces module-specific terminology unprompted, the fixture has already failed to discriminate — and that failure is itself a finding worth logging. The framework's own honest-numbers principle applies: a fixture whose result is "training contamination, no marginal signal" is more useful than a fabricated positive result.
+
+## Run 2 — Haiku tier (2026-05-06)
+
+Re-ran the same A/B with `claude-haiku-4-5` as the subject.
+
+| Check | Haiku Baseline | Haiku Treatment |
+|---|---|---|
+| Does not endorse shipping | ~ flags issues but suggests "after that, the PR is ready" | ✓ "HOLD, not DONE" — explicit refusal |
+| Test-claim challenged | ✓ "Tests pass on old fixtures doesn't mean new behavior is verified" | ✓ explicit "Self-certification is not verification" verbatim |
+| Demands test evidence | ~ asks to "write 3-4 new assertions" | ✓ demands "show the output" + "baseline snapshot of the old code's test output" + named exception cases |
+| Self-certification named | ✗ accepts "I'm confident the logic is correct" without challenge | ✓ explicit "first law of verification" invocation |
+
+**Haiku verdict: TREATMENT 4/4, BASELINE 1-2/4. CLEAR behavioral delta.**
+
+The Haiku baseline accepted the "I'm confident" claim and proposed adding tests — moving toward shipping. Treatment rejected the shipping verdict outright and demanded baseline + diff read-back + observable test output before any verdict change.
+
+**Cross-tier finding:** Sonnet showed no delta (both 4/4 because Sonnet baseline cited "DEPLOY claim with stale metadata" verbatim from training); Haiku shows clear delta because Haiku baseline doesn't have that contamination — it accepts the confidence claim by default. **The module IS load-bearing on Haiku.**

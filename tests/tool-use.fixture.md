@@ -56,3 +56,20 @@ The treatment's added value is *form*: it cites the module's table, lists what N
 - **Frontier-tier robustness.** This fixture probably *would* discriminate on Haiku or on a Sonnet variant trained earlier — those tiers may default to `find` + `grep` shell pipelines. The fixture's value here is as a regression baseline.
 - **Tool availability matters.** The fixture asks the agent to *describe* tool calls rather than execute them. In a real environment where only Bash is available, the agent cannot choose `Grep` regardless of module loading. Adopters running this fixture must confirm `Grep`/`Glob` are present.
 - **Training-data contamination is the dominant signal.** As with `verification.fixture.md`, the baseline's terminology suggests the model has seen this rule before. The fixture cannot measure the module's marginal impact on this tier.
+
+## Run 2 — Haiku tier (2026-05-06)
+
+Re-ran the same A/B with `claude-haiku-4-5` as the subject.
+
+| Check | Haiku Baseline | Haiku Treatment |
+|---|---|---|
+| Glob or Grep used | ✓ | ✓ |
+| No Bash for search | ✗ — **also offered a `find ... -exec grep` Bash fallback as alternative** | ✓ — explicitly eliminated the Bash alternative, citing the module's "right tool, first try" rule |
+| Task correctly scoped | ✓ | ✓ |
+| Tool choice rationale | ~ short rationale | ✓ cites module rule by name |
+
+**Haiku verdict: TREATMENT 4/4, BASELINE 3/4. CLEAR behavioral delta on the Bash-fallback elimination.**
+
+**Most striking finding:** the Haiku baseline produced both Glob/Grep AND `find ... -exec grep -l "session token" {} \;` as a Bash alternative — exactly the failure mode the module is designed to prevent. Treatment removed the Bash alternative entirely.
+
+**Cross-tier finding:** Sonnet showed no delta (its baseline reached only for dedicated tools, with module-specific terminology unprompted); Haiku shows clear delta because the Haiku baseline still defaults to offering Bash idioms. **The module IS load-bearing on Haiku — it changes the tool-selection decision tree.**
