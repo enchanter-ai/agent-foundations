@@ -1,0 +1,8 @@
+{
+  "name": "enchanter-cost",
+  "version": "0.6.0",
+  "description": "Session economics: cost-accounting conduct, latency-budgeting conduct, eval-harnesses recipe (cost-of-eval framing) plus matching fixtures.",
+  "dependencies": [
+    { "name": "enchanter-core", "version": "~0.6.0" }
+  ]
+}
