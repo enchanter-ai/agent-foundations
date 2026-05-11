@@ -1,0 +1,8 @@
+{
+  "name": "enchanter-skills",
+  "version": "0.6.0",
+  "description": "Skill authoring and output formatting: skill-authoring conduct, formatting conduct, and all 8 framework recipes (Claude Code, Cursor, OpenAI Agents, LangChain, Pydantic-AI, BAML, system-prompt, stupid-agent-review).",
+  "dependencies": [
+    { "name": "enchanter-core", "version": "~0.6.0" }
+  ]
+}
