@@ -1,0 +1,9 @@
+{
+  "name": "enchanter-orchestration",
+  "version": "0.6.0",
+  "description": "Multi-agent orchestration primitives: task-decomposition, multi-turn-negotiation, eval-driven-self-improvement, inference-substrate conduct + all 12 algorithmic engines (agentproof, calibration, drift-detection, SPRT, etc.) + shared test runner.",
+  "dependencies": [
+    { "name": "enchanter-core", "version": "~0.6.0" },
+    { "name": "enchanter-cost", "version": "~0.6.0" }
+  ]
+}
