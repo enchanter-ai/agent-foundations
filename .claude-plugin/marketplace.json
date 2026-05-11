@@ -1,0 +1,18 @@
+{
+  "name": "enchanter-foundations",
+  "owner": { "name": "enchanter-ai" },
+  "metadata": {
+    "description": "Behavioral foundations for the @enchanter-ai ecosystem — conduct-as-code, failure taxonomy, engines, recipes. Split into 7 focused plugins.",
+    "version": "0.6.0",
+    "pluginRoot": "./packages"
+  },
+  "plugins": [
+    { "name": "enchanter-core",          "source": "core",          "version": "0.6.0", "description": "Universal behavioral foundation: discipline, context, verification, delegation, tier-sizing, F01-F14 taxonomy, tool-use, doubt-engine, hooks, precedent." },
+    { "name": "enchanter-skills",        "source": "skills",        "version": "0.6.0", "description": "Skill authoring + output formatting + 8 framework recipes (Claude Code, Cursor, OpenAI Agents, LangChain, Pydantic-AI, BAML, system-prompt, stupid-agent-review)." },
+    { "name": "enchanter-orchestration", "source": "orchestration", "version": "0.6.0", "description": "Multi-agent orchestration: task-decomposition, multi-turn-negotiation, eval-driven-self-improvement, inference-substrate + 12 algorithmic engines + shared test runner." },
+    { "name": "enchanter-web",           "source": "web",           "version": "0.6.0", "description": "Live web access conduct: cache, dedup, budget, cite hygiene." },
+    { "name": "enchanter-memory",        "source": "memory",        "version": "0.6.0", "description": "Cross-session memory hygiene: working memory, decay, recall verification." },
+    { "name": "enchanter-cost",          "source": "cost",          "version": "0.6.0", "description": "Session economics: cost-accounting, latency-budgeting, eval-harnesses recipe." },
+    { "name": "enchanter-safety",        "source": "safety",        "version": "0.6.0", "description": "Safety + compliance + security + operator-wiring: refusal-and-recovery, F15-F21 taxonomy, FedRAMP/ISO/SOC2/NIST evidence, pentest, synthetic-fire, OTLP/PagerDuty/Sentry wiring." }
+  ]
+}
