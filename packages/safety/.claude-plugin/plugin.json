@@ -1,0 +1,8 @@
+{
+  "name": "enchanter-safety",
+  "version": "0.6.0",
+  "description": "Safety, compliance, security, and operator wiring: refusal-and-recovery conduct, F15-F21 taxonomy + runbooks, full compliance subtree (FedRAMP, ISO 42001, SOC 2, NIST AI RMF), pentest + synthetic-fire artifacts, and operator-wiring observability/paging.",
+  "dependencies": [
+    { "name": "enchanter-core", "version": "~0.6.0" }
+  ]
+}
