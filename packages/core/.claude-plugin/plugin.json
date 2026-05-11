@@ -1,0 +1,6 @@
+{
+  "name": "enchanter-core",
+  "version": "0.6.0",
+  "description": "Universal behavioral foundation: discipline, context, verification, delegation, tier-sizing, failure-modes taxonomy (F01-F14), tool-use, doubt-engine, hooks, precedent. Required by every enchanter-* sibling.",
+  "dependencies": []
+}
