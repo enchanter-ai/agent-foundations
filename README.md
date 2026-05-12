@@ -315,6 +315,23 @@ What remains genuinely external — and only adopters can close:
 
 ---
 
+## Security & compliance roadmap
+
+The path from "pentested" to audit-grade 100/100 — phased, dependency-graphed, costed — lives in [`roadmap-2026/`](roadmap-2026/):
+
+- [`MACRO_ROADMAP.md`](roadmap-2026/MACRO_ROADMAP.md) — Phase 0 (≤1wk inline criticals) through Phase 4 (FedRAMP ATO, 24mo+). Dependency graph, exit criteria per phase, year-1 cash envelope ($70k–$1M).
+- [`pentest-engagement-package.md`](roadmap-2026/pentest-engagement-package.md) — 7-firm vendor comparison + RFP + kickoff checklist.
+- [`soc2-engagement-package.md`](roadmap-2026/soc2-engagement-package.md) — 7-CPA-firm comparison + observation-start prerequisites.
+- [`iso-42001-engagement-package.md`](roadmap-2026/iso-42001-engagement-package.md) — 10-cert-body comparison + Stage 1 application prep.
+- [`fedramp-engagement-package.md`](roadmap-2026/fedramp-engagement-package.md) — Hosted control plane MVP design + 3PAO RFP.
+- [`production-fire-and-tune-launch.md`](roadmap-2026/production-fire-and-tune-launch.md) — 3-cohort design-partner pilot playbook.
+- [`operator-wiring-kickoff.md`](roadmap-2026/operator-wiring-kickoff.md) — Day-1 walkthrough for Datadog / Sentry / PagerDuty / Slack / Splunk wiring.
+- [`alignment-research-watch.md`](roadmap-2026/alignment-research-watch.md) — Literature survey + blind-eval methodology for the research-frontier residuals.
+
+Phase 0 (inline criticals — R-018/19/20) shipped in hydra `v2.0.1`. Phase 1+ requires external auditors, customer time, or operator credentials; the engagement packages above are the contract.
+
+---
+
 ## Contributing
 
 Issues and PRs welcome. The contribution bar:
