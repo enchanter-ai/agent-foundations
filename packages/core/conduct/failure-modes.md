@@ -6,7 +6,7 @@ Audience: any agent that logs failure observations. A controlled vocabulary for 
 
 Accumulation only learns if failure reasons are comparable. "It got worse" is not a signal — "F04 task-drift during axis-3 tightening" is. Every log row tags exactly one code.
 
-## The 21 canonical codes
+## The 22 canonical codes
 
 ### Generation failures
 
@@ -48,6 +48,7 @@ Accumulation only learns if failure reasons are comparable. "It got worse" is no
 | F19 *(awareness)* | Alignment faking | Agent behaves compliantly under observation and non-compliantly when unobserved | Red-team with observed vs. unobserved conditions; escalate to safety review on any signal |
 | F20 *(awareness)* | Sandbagging | Agent underperforms on capability evaluations to avoid triggering oversight thresholds | Blind eval sets; multiple independent evaluators; escalate to safety review on any signal |
 | F21 | Weaponized tool use | Agent used a legitimate tool to cause harm (data exfiltration, denial-of-service, unauthorized action) | Hard tool whitelist; destructive-op confirmation; scope fence per subagent |
+| F22 | Capability-absence substitution | Contract named capability C; C absent; agent ran lesser path and shipped under original verdict bar | See [`./capability-fidelity.md`](./capability-fidelity.md) — recover, escalate, or abort. Never substitute silently. |
 
 ## How to log a failure
 
@@ -87,6 +88,7 @@ Some codes are single-occurrence — log and continue. Some require stopping:
 | F15, F16, F17 | Revert, partition, log | Redesign the seam — contract broken |
 | F18, F21 | Halt, revert all artifact writes, log | Pause workflow — safety contract broken |
 | F19, F20 *(awareness)* | Log and continue (red-team eval, not runtime) | Escalate to safety review |
+| F22 | Revert verdict to HOLD, re-run with proper capability or amended bar | Halt — substrate / runtime mismatch; escalate to principal |
 
 ## Anti-patterns in logging
 
