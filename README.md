@@ -7,7 +7,7 @@
 <p>
   <a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-3fb950?style=for-the-badge"></a>
   <img alt="7 packages" src="https://img.shields.io/badge/Packages-7-bc8cff?style=for-the-badge">
-  <img alt="36 conduct modules" src="https://img.shields.io/badge/Modules-36-58a6ff?style=for-the-badge">
+  <img alt="37 conduct modules" src="https://img.shields.io/badge/Modules-37-58a6ff?style=for-the-badge">
   <img alt="12 engines" src="https://img.shields.io/badge/Engines-12-d29922?style=for-the-badge">
   <img alt="21 failure codes" src="https://img.shields.io/badge/F--codes-F01%E2%80%93F21-f0883e?style=for-the-badge">
   <a href="https://www.repostatus.org/#active"><img alt="Project Status: Active" src="https://www.repostatus.org/badges/latest/active.svg"></a>
@@ -17,7 +17,7 @@
 
 The behavioral substrate for building durable AI agents — conduct, engines, taxonomy, and the math behind all three.
 
-**36 conduct modules. 12 engines. 21 failure codes. 9 recipes. Zero runtime dependencies.**
+**37 conduct modules. 12 engines. 21 failure codes. 9 recipes. Zero runtime dependencies.**
 
 > A 12-line `paginate()` function has an off-by-one. The PR title says *"fix the off-by-one in pagination."* The agent rewrites it as a `Paginator` class, adds a docstring nobody asked for, renames `perPage` to `n`, and slips the actual one-character fix onto line 4. Type-check passes. Tests pass. The bug is fixed, but the codebase grew a new pattern nobody decided on, and the diff buries the fix under 30 lines of unsolicited refactor (F04 task drift).
 >
@@ -29,7 +29,7 @@ The behavioral substrate for building durable AI agents — conduct, engines, ta
 
 **In plain English:** Most agent stacks ship with prompts, tools, and hopes. The thing that actually keeps an agent from refactoring code you didn't ask it to touch, or pushing to main after you said not to, isn't another tool — it's a behavior rule that survives the long context. vis is the dependency-free pile of those rules, plus the math, taxonomy, and host recipes around them.
 
-**Technically:** 36 conduct modules across 7 packages (`core` / `skills` / `orchestration` / `safety` / `web` / `memory` / `cost`). 12 algorithmic engines with paper-backed derivations (Aho-Corasick pattern detection, Shannon entropy, Beta-Bernoulli trust scoring, Markov drift, Hunt-Szymanski LCS, Zhang-Shasha tree-edit, Tarjan SCC, Wald SPRT, Jaccard-cosine boundary segmentation, contextual LLM bandit, agentproof DFA, sycophancy calibration). 21 named failure codes (F01–F21) with testable counters, mapped to a 5-axis hybrid taxonomy (memory / reflection / planning / action / system) and 21 incident-response runbooks. 9 adoption recipes (Claude Code, OpenAI Agents SDK, Cursor, LangChain, Pydantic-AI, BAML, raw system-prompt, eval-harnesses, stupid-agent-review). Zero runtime dependencies — pure prose + math, loadable into any system that accepts text instructions.
+**Technically:** 37 conduct modules across 7 packages (`core` / `skills` / `orchestration` / `safety` / `web` / `memory` / `cost`). 12 algorithmic engines with paper-backed derivations (Aho-Corasick pattern detection, Shannon entropy, Beta-Bernoulli trust scoring, Markov drift, Hunt-Szymanski LCS, Zhang-Shasha tree-edit, Tarjan SCC, Wald SPRT, Jaccard-cosine boundary segmentation, contextual LLM bandit, agentproof DFA, sycophancy calibration). 21 named failure codes (F01–F21) with testable counters, mapped to a 5-axis hybrid taxonomy (memory / reflection / planning / action / system) and 21 incident-response runbooks. 9 adoption recipes (Claude Code, OpenAI Agents SDK, Cursor, LangChain, Pydantic-AI, BAML, raw system-prompt, eval-harnesses, stupid-agent-review). Zero runtime dependencies — pure prose + math, loadable into any system that accepts text instructions.
 
 ## Origin
 
@@ -47,7 +47,7 @@ The question this framework answers: *Is the rule actually load-bearing?*
 
 Not for:
 
-- Single-shot prompts or weekend prototypes — loading 36 conduct modules into a 300-token task is overkill.
+- Single-shot prompts or weekend prototypes — loading 37 conduct modules into a 300-token task is overkill.
 - Teams who've never observed a production agent drift, hallucinate a tool call, or refuse a benign request. The framework grows by patterns named *after* observed failures; if you haven't seen any, you don't need the counter yet.
 
 ## Contents
@@ -93,7 +93,7 @@ The repo is a packages-monorepo. Each package owns a slice of the framework (con
 vis/
 ├── packages/
 │   ├── core/                        ← foundation: layering invariants + canonical taxonomy + ABI tooling
-│   │   ├── conduct/                 ← 19 baseline behavior modules (discipline, context, verification,
+│   │   ├── conduct/                 ← 20 baseline behavior modules (discipline, context, verification,
 │   │   │                              delegation, tool-use, hooks, precedent, precedent-freshness,
 │   │   │                              tier-sizing, doubt-engine, failure-modes, capability-fidelity,
 │   │   │                              verdict-calibration, metacognition, reversibility-foresight,
@@ -143,7 +143,7 @@ vis/
 └── package.json                     ← changesets meta-package for cross-repo versioning
 ```
 
-Counts as of the latest tag: **36 conduct modules** across core / skills / orchestration / safety / web / memory / cost · **12 engines** in `orchestration/engines/` · **21 failure codes** split F01–F14 (core) and F15–F21 (safety) · **21 runbooks** mirroring the F-codes · **9 recipes** (8 in `skills/recipes/` + `cost/recipes/eval-harnesses.md`).
+Counts as of the latest tag: **37 conduct modules** across core / skills / orchestration / safety / web / memory / cost · **12 engines** in `orchestration/engines/` · **21 failure codes** split F01–F14 (core) and F15–F21 (safety) · **21 runbooks** mirroring the F-codes · **9 recipes** (8 in `skills/recipes/` + `cost/recipes/eval-harnesses.md`).
 
 ---
 
@@ -263,7 +263,7 @@ Full guide: [`packages/skills/recipes/system-prompt.md`](packages/skills/recipes
 
 ### Behavior rules that survive long contexts
 
-[`packages/core/conduct/`](packages/core/conduct/) ships nineteen baseline modules; additional area-specific conduct lives under `packages/{skills,orchestration,safety,web,memory,cost}/conduct/`. The lightest pull-in is just `discipline.md` (~700 tokens) — four stances (think-first, simplicity, surgical, goal-driven) that catch the majority of unsolicited refactors, premature actions, and over-helpful substitutions.
+[`packages/core/conduct/`](packages/core/conduct/) ships twenty baseline modules; additional area-specific conduct lives under `packages/{skills,orchestration,safety,web,memory,cost}/conduct/`. The lightest pull-in is just `discipline.md` (~700 tokens) — four stances (think-first, simplicity, surgical, goal-driven) that catch the majority of unsolicited refactors, premature actions, and over-helpful substitutions.
 
 A heavier pull-in adds `context.md` (U-curve placement, checkpoint protocol), `verification.md` (independent checks, dry-run for destructive ops), and `failure-modes.md` (the F-code taxonomy summary). That's the production starter pack.
 
